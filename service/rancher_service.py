@@ -7,25 +7,30 @@ import os
 
 # 删除指定服务名称的service
 def delete_service(service_name):
-    url = str.format('http://{}/v2-beta/projects/{}/services', conf().RANCHER_ADDRESS, conf().PROJECT_ID)
-    service_id = _get_service_id(service_name)
-    url = str.format(url + '/{}', service_id)
-    res = request_util.delete(url)
+    # 删除副本操作
+    delete_str = "kubectl patch deployment  "+service_name+" -p '{\"spec\":{\"replicas\":0}}' -n "+conf().DEPLOYMENT
+    # url = str.format('http://{}/v2-beta/projects/{}/services', conf().RANCHER_ADDRESS, conf().PROJECT_ID)
+    res=os.system(delete_str)
+    # service_id = _get_service_id(service_name)
+    # url = str.format(url + '/{}', service_id)
+    # res = request_util.delete(url)
     logger.info("节点删除中: " + res)
 
 
 # 启动服务
 def create_service(service_name, neighbors):
-    url = str.format('http://{}/v2-beta/projects/{}/services', conf().RANCHER_ADDRESS, conf().PROJECT_ID)
-    # 读取配置文件
-    args_str = file_util.read(conf().RANCHER_TEMPLATE_PATH)
-
-    # 设置参数
-    args = _set_docker_config(args_str, service_name, neighbors)
-
-    logger.info(url)
-
-    res = request_util.post(url, args)
+    create_str = "kubectl patch deployment  " + service_name + " -p '{\"spec\":{\"replicas\":1}}' -n " + conf().DEPLOYMENT
+    res = os.system(create_str)
+    # url = str.format('http://{}/v2-beta/projects/{}/services', conf().RANCHER_ADDRESS, conf().PROJECT_ID)
+    # # 读取配置文件
+    # args_str = file_util.read(conf().RANCHER_TEMPLATE_PATH)
+    #
+    # # 设置参数
+    # args = _set_docker_config(args_str, service_name, neighbors)
+    #
+    # logger.info(url)
+    #
+    # res = request_util.post(url, args)
     logger.info('节点创建成功: ' + res)
 
 
@@ -69,7 +74,7 @@ def _set_docker_config(args_str, service_name, neighbors):
 
 if __name__ == '__main__':
     config.load_config('dev')
-    create_service('TTANode3', '')
+    create_service('t', '')
     # time.sleep(15)
     # delete_service('TTANode1')
     # logger.info('hello')
