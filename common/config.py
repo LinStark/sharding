@@ -20,7 +20,7 @@ class Config:
     NODE_DIR = ''
     DEBUG = True
     IMAGE_ID = ''
-
+    DEPLOYMENT=''
     def __init__(self):
         pass
 
@@ -61,7 +61,7 @@ def set_config(con):
     config.NODE_DIR = con.get('NODE_DIR')
     config.DEBUG = con.get('DEBUG')
     config.IMAGE_ID = con.get('IMAGE_ID')
-
+    config.DEPLOYMENT=con.get('DEPLOYMENT')
 
 def conf():
     return config

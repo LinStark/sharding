@@ -13,7 +13,7 @@ def do_create():
     try:
         args = request.get_json()
         logger.info(args)
-        if not args.get('peerName') or not args.get('newPeerName') or not args.get('genesis') or not args.get('neighbors'):
+        if not args.get('peerName') or not args.get('newPeerName'):#or not args.get('genesis') or not args.get('neighbors'):
             return result_dto(False, 401, '参数错误', '')
         # 创建节点
         move_service.do_create(args.get('peerName'), args.get('newPeerName'), args.get('genesis'), args.get('neighbors'))

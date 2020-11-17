@@ -26,10 +26,8 @@ def do_delete(service_name):
     # 节点目录为 数据根目录 加上 节点名称
     peer_dir = os.path.join(conf().NODE_DIR, service_name)
     data_dir = os.path.join(peer_dir, 'data')
-
     # 删除data文件
     file_util.remove(data_dir)
-
     # 创建data目录并放入 配置文件
     file_util.make_dir(data_dir)
     file_util.copy(conf().VALIDATOR_STATE_PATH, data_dir)

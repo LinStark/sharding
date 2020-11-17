@@ -1,7 +1,7 @@
 import os
 import shutil
 import json
-
+from common.log import logger
 
 # 读取文件所有内容
 def read(path):
